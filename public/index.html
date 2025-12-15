@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - JavTech</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Estilos específicos para la página de inicio */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #5eead4 0%, #3b82f6 100%);
+            --secondary-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('/imgs/tech-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 100px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(94, 234, 212, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(94, 234, 212, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(94, 234, 212, 0.1);
+            color: #5eead4;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .stat-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: #5eead4;
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        /* Featured Product */
+        .featured {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .featured-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .featured-header h2 {
+            font-size: 2.5rem;
+            color: #5eead4;
+            margin-bottom: 15px;
+        }
+        
+        .featured-header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .featured-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 900px) {
+            .featured-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .featured-image {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .featured-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .featured-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, transparent 0%, rgba(30, 41, 59, 0.5) 100%);
+        }
+        
+        .featured-details {
+            padding: 40px;
+        }
+        
+        .featured-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .featured-title {
+            font-size: 2rem;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        
+        .featured-specs {
+            margin: 30px 0;
+        }
+        
+        .spec-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+        }
+        
+        .spec-icon {
+            color: #5eead4;
+            margin-right: 10px;
+            font-size: 1.2rem;
+            min-width: 30px;
+        }
+        
+        .featured-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #10b981;
+            margin: 30px 0;
+        }
+        
+        .featured-price small {
+            font-size: 1rem;
+            color: #94a3b8;
+        }
+        
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #5eead4;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            color: #5eead4;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, rgba(94, 234, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 80px auto;
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            color: #5eead4;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Botones personalizados */
+        .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            min-width: 200px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary-hero {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 10px 30px rgba(94, 234, 212, 0.3);
+        }
+        
+        .btn-primary-hero:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(94, 234, 212, 0.4);
+        }
+        
+        .btn-secondary-hero {
+            background: rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        
+        .btn-secondary-hero:hover {
+            background: rgba(148, 163, 184, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+            
+            .featured-title {
+                font-size: 1.8rem;
+            }
+            
+            .featured-price {
+                font-size: 2rem;
+            }
+            
+            .cta h2 {
+                font-size: 2rem;
+            }
+            
+            .btn-hero {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-card {
+                padding: 30px 20px;
+            }
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+        
+        /* Scroll animations */
+        .reveal {
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge fade-in">✨ Líderes en Tecnología desde 2023</div>
+            <h1 class="fade-in delay-1">Tu Próxima Computadora<br>de Alto Rendimiento</h1>
+            <p class="fade-in delay-2">
+                JavTech se distingue como la mejor opción en Tijuana, Baja California, para la adquisición 
+                de computadoras tanto nuevas como de segunda mano. Equipos certificados, revisados y 
+                optimizados para máximo rendimiento.
+            </p>
+            <div class="fade-in delay-3">
+                <a href="/catalogo" class="btn-hero btn-primary-hero">🛒 Explorar Catálogo</a>
+                <a href="/login.html" class="btn-hero btn-secondary-hero">🔐 Iniciar Sesión</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats reveal">
+        <div class="stat-card">
+            <span class="stat-icon">💻</span>
+            <div class="stat-number" data-count="150">0+</div>
+            <div class="stat-label">Computadoras Vendidas</div>
+        </div>
+        
+        <div class="stat-card">
+            <span class="stat-icon">⭐</span>
+            <div class="stat-number" data-count="4.9">0.0</div>
+            <div class="stat-label">Calificación de Clientes</div>
+        </div>
+        
+        <div class="stat-card">
+            <span class="stat-icon">🏢</span>
+            <div class="stat-number" data-count="3">0+</div>
+            <div class="stat-label">Años de Experiencia</div>
+        </div>
+        
+        <div class="stat-card">
+            <span class="stat-icon">🚚</span>
+            <div class="stat-number" data-count="24">0</div>
+            <div class="stat-label">Horas de Entrega</div>
+        </div>
+    </section>
+    
+    <!-- Featured Product -->
+    <section class="featured reveal">
+        <div class="featured-header">
+            <h2>🔥 Producto Destacado</h2>
+            <p>Nuestro equipo más vendido este mes</p>
+        </div>
+        
+        <div class="featured-content">
+            <div class="featured-image">
+                <img src="/imgs/PC1.png" alt="PC Gamer Ryzen + Radeon RX 5700XT">
+            </div>
+            
+            <div class="featured-details">
+                <span class="featured-badge">⭐ MÁS POPULAR</span>
+                <h3 class="featured-title">PC GAMER RYZEN 5TA GEN + RADEON RX 5700XT</h3>
+                
+                <div class="featured-specs">
+                    <div class="spec-item">
+                        <span class="spec-icon">⚡</span>
+                        <span><strong>Procesador:</strong> RYZEN 5 5600G</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">🎮</span>
+                        <span><strong>Gráficos:</strong> RADEON XFX RX 5700XT 8GB</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">💾</span>
+                        <span><strong>RAM:</strong> CORSAIR 16GB DDR4 3200 MHz</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-icon">💿</span>
+                        <span><strong>Almacenamiento:</strong> SSD 2.5" 1TB</span>
+                    </div>
+                </div>
+                
+                <div class="featured-price">
+                    $9,500 <small>MXN</small>
+                </div>
+                
+                <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 30px;">
+                    Equipo con mantenimiento recién hecho, cambio de pasta térmica y gestión de cables. 
+                    Sin detalles de funcionamiento ni estéticos. Excelente para gaming con configuración exigente.
+                </p>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <a href="/catalogo" class="btn-hero btn-primary-hero" style="padding: 15px 30px;">
+                        🔍 Ver Catalogo
+                    </a>
+                    <button onclick="mostrarInteres(1)" class="btn-hero btn-secondary-hero" style="padding: 15px 30px;">
+                        🛒 Expresar Interés
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features reveal">
+        <div class="featured-header">
+            <h2>🌟 ¿Por Qué Elegir JavTech?</h2>
+            <p>La mejor experiencia en tecnología garantizada</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🔧</span>
+                <h3>Mantenimiento Certificado</h3>
+                <p>Cada equipo pasa por revisiones exhaustivas y mantenimiento profesional antes de la venta.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🛡️</span>
+                <h3>Garantía de 1 Año</h3>
+                <p>Todos nuestros productos incluyen garantía completa en componentes por 12 meses.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🚚</span>
+                <h3>Envío e Instalación Gratis</h3>
+                <p>Entregas a domicilio e instalación sin costo extra en zonas cercanas de Tijuana.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">💼</span>
+                <h3>Software Oficial</h3>
+                <p>Paquetería Office legalmente instalada en todos nuestros equipos.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🎯</span>
+                <h3>Asesoría Personalizada</h3>
+                <p>Te ayudamos a encontrar el equipo perfecto según tus necesidades y presupuesto.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">📞</span>
+                <h3>Soporte 24/7</h3>
+                <p>Asistencia técnica especializada disponible cuando más la necesites.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta reveal">
+        <h2>¿Listo para Potenciar tu Experiencia?</h2>
+        <p>
+            Únete a cientos de clientes satisfechos que ya confían en JavTech para sus necesidades tecnológicas. 
+            Encuentra la computadora perfecta para gaming, trabajo o estudio.
+        </p>
+        
+        <div class="cta-buttons">
+            <a href="/catalogo" class="btn-hero btn-primary-hero">🛒 Ver Catálogo Completo</a>
+            <a href="/registro.html" class="btn-hero btn-secondary-hero">📝 Crear Cuenta Gratis</a>
+        </div>
+    </section>
+    
+    <script>
+        // FUNCIÓN IDÉNTICA A LA DE CATÁLOGO
+        function cargarNavbarIndex() {
+            fetch('/navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar').innerHTML = data;
+                    return fetch('/tipo-usuario');
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const menu = document.querySelector('#navbar ul') || document.createElement('ul');
+                    
+                    if (!document.querySelector('#navbar ul')) {
+                        const navbarDiv = document.getElementById('navbar');
+                        const navElement = navbarDiv.querySelector('nav') || document.createElement('nav');
+                        navElement.appendChild(menu);
+                        navbarDiv.appendChild(navElement);
+                    }
+                    
+                    const tipoUsuario = data.tipo_usuario;
+
+                    // Agregar enlace al catálogo para todos
+                    menu.innerHTML += '<li><a href="/catalogo">🛒 Catálogo</a></li>';
+                    
+                    if (tipoUsuario === 'admin') {
+                        menu.innerHTML += '<li><a href="/tabla-computadoras">📊 Modificar</a></li>';
+                        menu.innerHTML += '<li><a href="/agregar-computadora">➕ Añadir</a></li>';
+                    } else if (tipoUsuario === 'cliente') {
+                        // menu.innerHTML += '<li><a href="/ver-mis-datos">👤 Mi Cuenta</a></li>';
+                    }
+
+                    menu.innerHTML += '<li><a href="/logout">🚪 Cerrar Sesión</a></li>';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('navbar').innerHTML = 
+                        '<nav><ul>' +
+                        '<li><a href="/">🏠 Inicio</a></li>' +
+                        '<li><a href="/catalogo">🛒 Catálogo</a></li>' +
+                        '<li><a href="/logout">🚪 Salir</a></li>' +
+                        '</ul></nav>';
+                });
+        }
+        
+        // Función simplificada - solo muestra alertas
+        function mostrarInteres(idComputadora) {
+            if (confirm('¿Te interesa esta computadora? Un asesor se pondrá en contacto contigo.')) {
+                alert('✅ Hemos registrado tu interés. Te contactaremos pronto.');
+                // No enviamos al servidor, solo muestra la alerta
+            }
+        }
+
+        // Animaciones de contadores
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (current > target) current = target;
+                        
+                        if (counter.getAttribute('data-count').includes('.')) {
+                            counter.textContent = current.toFixed(1) + (counter.textContent.includes('+') ? '+' : '');
+                        } else {
+                            counter.textContent = Math.floor(current) + (counter.textContent.includes('+') ? '+' : '');
+                        }
+                        
+                        setTimeout(updateCounter, 20);
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+        
+        // Scroll animations
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarNavbarIndex();
+            
+            // Animar contadores después de un delay
+            setTimeout(animateCounters, 500);
+            
+            // Configurar scroll animations
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Ejecutar una vez al cargar
+            
+            // Efectos de hover para tarjetas
+            document.querySelectorAll('.feature-card, .stat-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.3s ease';
+                });
+            });
+            
+            // Precargar imágenes importantes
+            const images = ['/imgs/PC1.png'];
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+        
+        // Efecto de escritura para el título (opcional)
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+        
+        // Opcional: Iniciar efecto de escritura si quieres
+        // window.onload = function() {
+        //     const title = document.querySelector('.hero h1');
+        //     const originalText = title.textContent;
+        //     typeWriter(title, originalText);
+        // };
+    </script>
+<style>
+        /* HOVER DE INFORMACIÓN DE LA EMPRESA */
+        .empresa-hover {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .empresa-toggle {
+            background: linear-gradient(135deg, #5eead4 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .empresa-toggle:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 15px 35px rgba(94, 234, 212, 0.4);
+        }
+        
+        .empresa-info {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 300px;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            visibility: hidden;
+        }
+        
+        .empresa-info.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
+        }
+        
+        .empresa-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(94, 234, 212, 0.3);
+        }
+        
+        .empresa-logo {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            color: #5eead4;
+        }
+        
+        .empresa-title {
+            color: #5eead4;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .empresa-datos {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .dato-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+        }
+        
+        .dato-icon {
+            color: #5eead4;
+            font-size: 1.2rem;
+            min-width: 25px;
+        }
+        
+        .telefono-link {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 10px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .telefono-link:hover {
+            background: rgba(34, 197, 94, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .empresa-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(94, 234, 212, 0.2);
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        
+        .whatsapp-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #25D366;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse-whatsapp 2s infinite;
+            border: 2px solid rgba(30, 41, 59, 0.95);
+        }
+        
+        @keyframes pulse-whatsapp {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Versión flotante en el footer */
+        .footer-empresa {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        .footer-toggle {
+            background: rgba(30, 41, 59, 0.9);
+            color: #5eead4;
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 120px;
+            font-weight: 500;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .footer-toggle:hover {
+            background: rgba(94, 234, 212, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .footer-info {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            width: 320px;
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            visibility: hidden;
+        }
+        
+        .footer-info.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .empresa-info, .footer-info {
+                width: 280px;
+                right: -10px;
+            }
+            
+            .footer-info {
+                left: -10px;
+            }
+            
+            .empresa-toggle, .footer-toggle {
+                width: 55px;
+                height: 55px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .empresa-hover {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .footer-empresa {
+                bottom: 15px;
+                left: 15px;
+            }
+            
+            .empresa-info, .footer-info {
+                width: 260px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tu contenido existente aquí -->
+    
+    <!-- OPCIÓN 1: Botón circular flotante (derecha) -->
+    <div class="empresa-hover">
+        <button class="empresa-toggle" onclick="toggleEmpresaInfo()">
+            <span class="whatsapp-badge">📞</span>
+            ℹ️
+        </button>
+        <div class="empresa-info" id="empresaInfo">
+            <div class="empresa-header">
+                <div class="empresa-logo">💻</div>
+                <h3 class="empresa-title">JavTech</h3>
+            </div>
+            <div class="empresa-datos">
+                <div class="dato-item">
+                    <span class="dato-icon">📍</span>
+                    <span>Tijuana, Baja California</span>
+                </div>
+                <div class="dato-item">
+                    <span class="dato-icon">🕒</span>
+                    <span>Lun - Vie: 9:00 AM - 7:00 PM<br>Sab: 10:00 AM - 3:00 PM</span>
+                </div>
+                <div class="dato-item">
+                    <span class="dato-icon">✉️</span>
+                    <span>javiervazquezsiytu@gmail.com</span>
+                </div>
+                <div class="dato-item">
+                    <span class="dato-icon">🏢</span>
+                    <span>Especialistas en computadoras nuevas y de segunda mano</span>
+                </div>
+                <a href="tel:6644613062" class="telefono-link">
+                    <span>📱</span>
+                    <span>664 461 3062</span>
+                </a>
+            </div>
+            <div class="empresa-footer">
+                ¡Estamos aquí para ayudarte!
+            </div>
+        </div>
+    </div>
+    
+    <!-- OPCIÓN 2: Barra flotante en el footer (izquierda) -->
+    <div class="footer-empresa">
+        <button class="footer-toggle" onclick="toggleFooterInfo()">
+            <span>📞</span>
+            Contactar
+        </button>
+        <div class="footer-info" id="footerInfo">
+            <div class="empresa-header">
+                <div class="empresa-logo">🚀</div>
+                <h3 class="empresa-title">Contacto JavTech</h3>
+            </div>
+            <div class="empresa-datos">
+                <div class="dato-item">
+                    <span class="dato-icon">📞</span>
+                    <span><strong>Teléfono Principal:</strong><br>664 461 3062</span>
+                </div>
+                <div class="dato-item">
+                    <span class="dato-icon">📱</span>
+                    <span><strong>WhatsApp:</strong><br>Mismo número</span>
+                </div>
+                <div class="dato-item">
+                    <span class="dato-icon">📍</span>
+                    <span><strong>Ubicación:</strong><br>Tijuana, Baja California</span>
+                </div>
+                <div class="dato-item">
+                    <span class="dato-icon">🎯</span>
+                    <span><strong>Especialidad:</strong><br>Computadoras gaming y de trabajo</span>
+                </div>
+                <div class="dato-item">
+                    <span class="dato-icon">🛡️</span>
+                    <span><strong>Garantía:</strong><br>1 año en todos los equipos</span>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <a href="tel:6644613062" class="telefono-link" style="flex: 1;">
+                        <span>📞</span>
+                        <span>Llamar</span>
+                    </a>
+                    <a href="https://wa.me/526644613062" target="_blank" class="telefono-link" style="flex: 1; background: rgba(37, 211, 102, 0.2); color: #25D366; border-color: rgba(37, 211, 102, 0.3);">
+                        <span>💬</span>
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+            <div class="empresa-footer">
+                © 2024 JavTech - Tu tecnología, nuestra pasión
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Función para mostrar/ocultar info empresa (Opción 1)
+        function toggleEmpresaInfo() {
+            const empresaInfo = document.getElementById('empresaInfo');
+            const isActive = empresaInfo.classList.contains('active');
+            
+            // Cerrar el otro panel si está abierto
+            const footerInfo = document.getElementById('footerInfo');
+            if (footerInfo.classList.contains('active')) {
+                footerInfo.classList.remove('active');
+            }
+            
+            if (isActive) {
+                empresaInfo.classList.remove('active');
+            } else {
+                empresaInfo.classList.add('active');
+            }
+        }
+        
+        // Función para mostrar/ocultar info footer (Opción 2)
+        function toggleFooterInfo() {
+            const footerInfo = document.getElementById('footerInfo');
+            const isActive = footerInfo.classList.contains('active');
+            
+            // Cerrar el otro panel si está abierto
+            const empresaInfo = document.getElementById('empresaInfo');
+            if (empresaInfo.classList.contains('active')) {
+                empresaInfo.classList.remove('active');
+            }
+            
+            if (isActive) {
+                footerInfo.classList.remove('active');
+            } else {
+                footerInfo.classList.add('active');
+            }
+        }
+        
+        // Cerrar al hacer click fuera
+        document.addEventListener('click', function(event) {
+            const empresaHover = document.querySelector('.empresa-hover');
+            const footerEmpresa = document.querySelector('.footer-empresa');
+            const empresaInfo = document.getElementById('empresaInfo');
+            const footerInfo = document.getElementById('footerInfo');
+            
+            // Si el click no está dentro del elemento empresa-hover
+            if (empresaHover && !empresaHover.contains(event.target)) {
+                empresaInfo.classList.remove('active');
+            }
+            
+            // Si el click no está dentro del elemento footer-empresa
+            if (footerEmpresa && !footerEmpresa.contains(event.target)) {
+                footerInfo.classList.remove('active');
+            }
+        });
+        
+        // Cerrar con tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.getElementById('empresaInfo').classList.remove('active');
+                document.getElementById('footerInfo').classList.remove('active');
+            }
+        });
+        
+        // Inicializar al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar animación inicial al botón
+            setTimeout(() => {
+                const toggleBtn = document.querySelector('.empresa-toggle');
+                toggleBtn.style.animation = 'pulse 2s 2';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

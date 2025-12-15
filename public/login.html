@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  
+  <div id="logo">   
+    <img src="/imgs/logo.png" class="logo-01"> 
+    <h1> JavTech </h1> 
+  </div>
+
+  <h2 id="TituloLogin">Iniciar Sesión</h2>
+  
+  <form id="Form", action="/login" method="POST">
+    
+    <label id="Label" for="nombre_usuario">Nombre de Usuario:</label>
+    <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+    <br>
+    <label id="Label" for="password"> Contraseña: </label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button id="Boton" type="submit">Iniciar Sesión</button>
+
+  </form>
+
+  <p id="TextoLogin">¿No tienes cuenta? <a href="/registro.html">Regístrate aquí</a></p>
+</body>
+</html>

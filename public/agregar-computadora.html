@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Computadora - JavTech</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Contenedor principal */
+        .container {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+        }
+        
+        /* Tarjeta del formulario */
+        .form-card {
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Encabezado */
+        .form-header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(94, 234, 212, 0.3);
+        }
+        
+        .form-header h1 {
+            color: #5eead4;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+        
+        /* Grupos de formulario */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        .required::after {
+            content: " *";
+            color: #ef4444;
+        }
+        
+        /* Campos de entrada */
+        .form-input, .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(94, 234, 212, 0.2);
+            border-radius: 10px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #5eead4;
+            box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.1);
+        }
+        
+        /* Estilos para el input file personalizado */
+        .file-input-container {
+            position: relative;
+            margin-top: 10px;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px dashed rgba(94, 234, 212, 0.3);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-input-label:hover {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: #5eead4;
+        }
+        
+        .file-input-label .icon {
+            font-size: 2.5rem;
+            color: #5eead4;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .file-input-label .text {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .file-input-label .subtext {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+        
+        #fileName {
+            color: #5eead4;
+            font-weight: 500;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+        }
+        
+        #fileInput {
+            display: none;
+        }
+        
+        /* Vista previa de imagen */
+        .image-preview-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        #imagePreview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            border: 2px solid rgba(94, 234, 212, 0.3);
+            display: none;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Mensajes */
+        .message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .message-error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .message-warning {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        
+        /* Botones */
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            min-width: 160px;
+            text-align: center;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #5eead4 0%, #3b82f6 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 25px;
+            }
+            
+            .form-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        /* Estado de carga */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Estilos para el progreso de carga */
+        .progress-container {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: linear-gradient(90deg, #5eead4 0%, #3b82f6 100%);
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+            text-align: center;
+            color: white;
+            font-size: 0.8rem;
+            line-height: 20px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar se carga aquí -->
+    <div id="navbar"></div>
+    
+    <!-- Contenido principal -->
+    <div class="container">
+        <div class="form-card">
+            <div class="form-header">
+                <h1>➕ Añadir Nueva Computadora</h1>
+                <p>Agrega una nueva computadora al catálogo de JavTech</p>
+            </div>
+            
+            <!-- Mensajes de estado -->
+            <div id="message" class="message"></div>
+            
+            <!-- Formulario -->
+            <form id="formAgregar" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="procesador" class="form-label required">Procesador</label>
+                    <input type="text" id="procesador" name="procesador" required 
+                           class="form-input" placeholder="Ej: Intel Core i7-12700H, AMD Ryzen 7 5800X">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tarjeta_grafica" class="form-label">Tarjeta Gráfica</label>
+                    <input type="text" id="tarjeta_grafica" name="tarjeta_grafica" 
+                           class="form-input" placeholder="Ej: NVIDIA RTX 4060 8GB (opcional, déjalo vacío si es integrada)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ram" class="form-label required">Memoria RAM</label>
+                    <input type="text" id="ram" name="ram" required 
+                           class="form-input" placeholder="Ej: 16GB DDR5, 32GB DDR4">
+                </div>
+                
+                <div class="form-group">
+                    <label for="precio" class="form-label required">Precio ($ MXN)</label>
+                    <input type="number" id="precio" name="precio" step="0.01" min="0" required 
+                           class="form-input" placeholder="Ej: 24999.99">
+                    <small style="color: #94a3b8; font-size: 0.85rem; margin-top: 5px; display: block;">
+                        Precio en pesos mexicanos
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="estado" class="form-label required">Estado</label>
+                    <select id="estado" name="estado" required class="form-select">
+                        <option value="disponible" selected>🟢 Disponible</option>
+                        <option value="apartada">🟡 Apartada</option>
+                        <option value="vendida">🔴 Vendida</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Imagen de la Computadora</label>
+                    <div class="file-input-container">
+                        <label for="fileInput" class="file-input-label">
+                            <span class="icon">📁</span>
+                            <span class="text">Haz clic para subir una imagen</span>
+                            <span class="subtext">JPG, PNG, GIF o WebP (máx. 5MB)</span>
+                        </label>
+                        <input type="file" id="fileInput" name="imagen" accept="image/*">
+                        <span id="fileName"></span>
+                    </div>
+                    
+                    <!-- Barra de progreso -->
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar" id="progressBar">0%</div>
+                    </div>
+                    
+                    <!-- Vista previa de imagen -->
+                    <div class="image-preview-container">
+                        <img id="imagePreview" alt="Vista previa de la imagen">
+                    </div>
+                    
+                    <small style="color: #94a3b8; display: block; margin-top: 10px;">
+                        ⓘ Sube una imagen o se usará automáticamente una imagen por defecto
+                    </small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <span id="submitText">💾 Guardar Computadora</span>
+                        <span id="submitLoading" class="loading" style="display: none;"></span>
+                    </button>
+                    <a href="/tabla-computadoras" class="btn btn-secondary">📊 Ver Todas</a>
+                    <a href="/" class="btn btn-secondary">🏠 Inicio</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // FUNCIÓN IDÉNTICA A LA DE INDEX.HTML
+        function cargarNavbarIndex() {
+            fetch('/navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    // Insertar navbar en el div
+                    document.getElementById('navbar').innerHTML = data;
+                    
+                    // Ahora verificar tipo de usuario
+                    return fetch('/tipo-usuario');
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Buscar el elemento menu dentro de la navbar cargada
+                    const menu = document.querySelector('#navbar ul') || document.createElement('ul');
+                    
+                    if (!document.querySelector('#navbar ul')) {
+                        // Si no existe un ul, crear uno
+                        const navbarDiv = document.getElementById('navbar');
+                        const navElement = navbarDiv.querySelector('nav') || document.createElement('nav');
+                        navElement.appendChild(menu);
+                        navbarDiv.appendChild(navElement);
+                    }
+                    
+                    const tipoUsuario = data.tipo_usuario;
+
+                    // Agregar opciones de menú según el tipo de usuario
+                    if (tipoUsuario === 'admin') {
+                        menu.innerHTML += '<li><a href="/catalogo">🛒 Catálogo </a></li>';
+                        menu.innerHTML += '<li><a href="/tabla-computadoras">📊 Modificar</a></li>';
+                        menu.innerHTML += '<li><a href="/agregar-computadora.html">➕ Añadir</a></li>';
+
+                    } else if (tipoUsuario === 'cliente') {
+                        menu.innerHTML += '<li><a href="/catalogo">🛒 Catálogo </a></li>';
+                    }
+
+                    // Opción de cerrar sesión para todos los tipos de usuario
+                    menu.innerHTML += '<li><a href="/logout">🚪 Cerrar Sesión</a></li>';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Si hay error, mostrar navbar básica
+                    document.getElementById('navbar').innerHTML = `
+                        <nav>
+                            <ul>
+                                <li><a href="/">🏠 Inicio</a></li>
+                                <li><a href="/logout">🚪 Cerrar Sesión</a></li>
+                            </ul>
+                        </nav>
+                    `;
+                });
+        }
+        
+        // Ejecutar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarNavbarIndex(); // Cargar navbar
+            verificarAdmin();    // Verificar si es admin para el formulario
+            inicializarFileInput(); // Inicializar el input de archivos
+        });
+        
+        // Verificar si es admin
+        function verificarAdmin() {
+            fetch('/api/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.loggedIn || data.user.tipo_usuario !== 'admin') {
+                        mostrarMensaje('🔒 Solo los administradores pueden añadir computadoras. Por favor, inicia sesión como administrador.', 'error');
+                        document.getElementById('formAgregar').style.opacity = '0.5';
+                        document.getElementById('formAgregar').style.pointerEvents = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error verificando sesión:', error);
+                });
+        }
+        
+        // Inicializar el input de archivos
+        function inicializarFileInput() {
+            const fileInput = document.getElementById('fileInput');
+            const fileName = document.getElementById('fileName');
+            const preview = document.getElementById('imagePreview');
+            
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                
+                if (file) {
+                    // Mostrar nombre del archivo
+                    fileName.textContent = `📄 Archivo seleccionado: ${file.name}`;
+                    
+                    // Validar tamaño (5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        mostrarMensaje('La imagen es demasiado grande (máximo 5MB)', 'error');
+                        fileInput.value = '';
+                        fileName.textContent = '';
+                        preview.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Validar tipo
+                    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                    if (!validTypes.includes(file.type)) {
+                        mostrarMensaje('Formato no válido. Use JPG, PNG, GIF o WebP', 'error');
+                        fileInput.value = '';
+                        fileName.textContent = '';
+                        preview.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Mostrar vista previa
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        preview.src = event.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                    
+                    // Ocultar barra de progreso si estaba visible
+                    document.getElementById('progressContainer').style.display = 'none';
+                    document.getElementById('progressBar').style.width = '0%';
+                    document.getElementById('progressBar').textContent = '0%';
+                } else {
+                    fileName.textContent = '';
+                    preview.style.display = 'none';
+                }
+            });
+        }
+        
+        // Manejar envío del formulario CON IMAGEN
+        document.getElementById('formAgregar').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validar datos básicos
+            const procesador = document.getElementById('procesador').value.trim();
+            const tarjeta_grafica = document.getElementById('tarjeta_grafica').value.trim();
+            const ram = document.getElementById('ram').value.trim();
+            const precio = document.getElementById('precio').value;
+            const estado = document.getElementById('estado').value;
+            const fileInput = document.getElementById('fileInput');
+            
+            // Validaciones básicas
+            if (!procesador || !ram || !precio) {
+                mostrarMensaje('Por favor complete todos los campos requeridos (*)', 'error');
+                return;
+            }
+            
+            if (parseFloat(precio) <= 0) {
+                mostrarMensaje('El precio debe ser mayor a 0', 'error');
+                return;
+            }
+            
+            if (parseFloat(precio) > 999999.99) {
+                mostrarMensaje('El precio máximo es $999,999.99', 'error');
+                document.getElementById('precio').value = 999999.99;
+                return;
+            }
+            
+            // Crear FormData (importante para archivos)
+            const formData = new FormData();
+            formData.append('procesador', procesador);
+            formData.append('tarjeta_grafica', tarjeta_grafica || 'Integrada');
+            formData.append('ram', ram);
+            formData.append('precio', parseFloat(precio));
+            formData.append('estado', estado);
+            
+            // Agregar imagen si se seleccionó
+            if (fileInput.files.length > 0) {
+                formData.append('imagen', fileInput.files[0]);
+            }
+            
+            // Mostrar estado de carga
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitLoading = document.getElementById('submitLoading');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            
+            submitBtn.disabled = true;
+            submitText.textContent = 'Guardando...';
+            submitLoading.style.display = 'inline-block';
+            
+            // Mostrar barra de progreso si hay imagen
+            if (fileInput.files.length > 0) {
+                progressContainer.style.display = 'block';
+            }
+            
+            // Crear XMLHttpRequest para monitorear progreso de carga
+            const xhr = new XMLHttpRequest();
+            
+            // Configurar eventos de progreso
+            xhr.upload.addEventListener('progress', function(event) {
+                if (event.lengthComputable) {
+                    const percentComplete = (event.loaded / event.total) * 100;
+                    progressBar.style.width = percentComplete + '%';
+                    progressBar.textContent = Math.round(percentComplete) + '%';
+                }
+            });
+            
+            // Configurar cuando se completa la carga
+            xhr.addEventListener('load', function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        
+                        // Restaurar botón
+                        submitBtn.disabled = false;
+                        submitText.textContent = '💾 Guardar Computadora';
+                        submitLoading.style.display = 'none';
+                        progressContainer.style.display = 'none';
+                        
+                        if (data.success) {
+                            let mensaje = `✅ ${data.message} (ID: ${data.id})`;
+                            if (data.imagen_url) {
+                                mensaje += ' con imagen subida exitosamente';
+                            }
+                            mostrarMensaje(mensaje, 'success');
+                            
+                            // Limpiar formulario
+                            document.getElementById('formAgregar').reset();
+                            document.getElementById('estado').value = 'disponible';
+                            document.getElementById('fileName').textContent = '';
+                            document.getElementById('imagePreview').style.display = 'none';
+                            
+                            // Redirigir después de 3 segundos
+                            setTimeout(() => {
+                                window.location.href = '/tabla-computadoras';
+                            }, 3000);
+                        } else {
+                            mostrarMensaje(`❌ ${data.error || 'Error al guardar'}`, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error parsing response:', error);
+                        mostrarMensaje('❌ Error procesando la respuesta del servidor', 'error');
+                        
+                        // Restaurar botón
+                        submitBtn.disabled = false;
+                        submitText.textContent = '💾 Guardar Computadora';
+                        submitLoading.style.display = 'none';
+                        progressContainer.style.display = 'none';
+                    }
+                } else {
+                    // Restaurar botón
+                    submitBtn.disabled = false;
+                    submitText.textContent = '💾 Guardar Computadora';
+                    submitLoading.style.display = 'none';
+                    progressContainer.style.display = 'none';
+                    
+                    if (xhr.status === 403) {
+                        mostrarMensaje('🔒 No tienes permisos de administrador', 'error');
+                    } else if (xhr.status === 413) {
+                        mostrarMensaje('❌ La imagen es demasiado grande (máximo 5MB)', 'error');
+                    } else {
+                        mostrarMensaje(`❌ Error del servidor (${xhr.status})`, 'error');
+                    }
+                }
+            });
+            
+            // Configurar errores
+            xhr.addEventListener('error', function() {
+                // Restaurar botón
+                submitBtn.disabled = false;
+                submitText.textContent = '💾 Guardar Computadora';
+                submitLoading.style.display = 'none';
+                progressContainer.style.display = 'none';
+                
+                mostrarMensaje('❌ Error de conexión con el servidor', 'error');
+            });
+            
+            // Configurar y enviar la solicitud
+            xhr.open('POST', '/api/computadoras');
+            xhr.send(formData);
+        });
+        
+        // Función para mostrar mensajes
+        function mostrarMensaje(texto, tipo) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = texto;
+            messageDiv.className = `message message-${tipo}`;
+            messageDiv.style.display = 'block';
+            
+            // Desplazar para ver el mensaje
+            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Ocultar mensaje después de 5 segundos (excepto success)
+            if (tipo !== 'success') {
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Validación en tiempo real para precio
+        document.getElementById('precio').addEventListener('input', function() {
+            const precio = parseFloat(this.value);
+            if (precio > 999999.99) {
+                this.value = 999999.99;
+                mostrarMensaje('El precio máximo es $999,999.99', 'warning');
+            }
+        });
+        
+        // Enfocar el primer campo al cargar
+        setTimeout(() => {
+            document.getElementById('procesador').focus();
+        }, 500);
+        
+        // Función para arrastrar y soltar archivos (opcional)
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropArea = document.querySelector('.file-input-label');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.style.borderColor = '#5eead4';
+                dropArea.style.background = 'rgba(94, 234, 212, 0.1)';
+            }
+            
+            function unhighlight() {
+                dropArea.style.borderColor = 'rgba(94, 234, 212, 0.3)';
+                dropArea.style.background = 'rgba(15, 23, 42, 0.8)';
+            }
+            
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    document.getElementById('fileInput').files = files;
+                    
+                    // Disparar el evento change manualmente
+                    const event = new Event('change');
+                    document.getElementById('fileInput').dispatchEvent(event);
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

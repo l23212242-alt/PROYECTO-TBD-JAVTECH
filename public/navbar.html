@@ -1,0 +1,59 @@
+<nav class="navbar-fixed">
+    <div class="navbar-container">
+        <img src="/imgs/logo.png" class="logo-nav" onclick="window.location.href='/'">
+
+        <!-- Menú principal -->
+
+    </div>
+</nav>
+
+<script>
+    // Verificar sesión al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+        checkSession();
+    });
+
+    async function checkSession() {
+        try {
+            const response = await fetch('/api/check-session');
+            const data = await response.json();
+            
+            if (data.loggedIn) {
+                // Mostrar información del usuario
+                document.getElementById('userSection').style.display = 'flex';
+                document.getElementById('userName').textContent = data.user.nombre_usuario || data.user.username;
+                document.getElementById('userType').textContent = data.user.tipo_usuario;
+                
+                // Mostrar botón de logout
+                document.getElementById('logoutBtn').style.display = 'block';
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'none';
+                
+                // Mostrar enlace de admin si es admin
+                if (data.user.tipo_usuario === 'admin') {
+                    document.getElementById('adminLink').style.display = 'block';
+                }
+            } else {
+                // Mostrar botones de login/registro
+                document.getElementById('userSection').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'none';
+                document.getElementById('loginBtn').style.display = 'block';
+                document.getElementById('registerBtn').style.display = 'block';
+            }
+        } catch (error) {
+            console.log('Error al verificar sesión:', error);
+        }
+    }
+
+    async function logout() {
+        try {
+            const response = await fetch('/logout', { method: 'GET' });
+            if (response.ok) {
+                window.location.href = '/login.html';
+            }
+        } catch (error) {
+            console.log('Error al cerrar sesión:', error);
+            window.location.href = '/login.html';
+        }
+    }
+</script>

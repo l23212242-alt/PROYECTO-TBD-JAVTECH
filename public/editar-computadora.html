@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Computadora - JavTech</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Estilos específicos para la página de edición */
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: rgba(30, 41, 59, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-container h1 {
+            color: #5eead4;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 90%;
+            padding: 12px 15px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(94, 234, 212, 0.2);
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #5eead4;
+            box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.1);
+        }
+        
+        select.form-input {
+            cursor: pointer;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #5eead4 0%, #3b82f6 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .loading {
+            text-align: center;
+            color: #5eead4;
+            padding: 20px;
+        }
+        
+        .error-message {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    
+    <div class="container">
+        <div id="loading" class="loading">
+            <p>Cargando datos de la computadora...</p>
+        </div>
+        
+        <div id="formContainer" style="display: none;">
+            <div class="form-container">
+                <h1>✏️ Editar Computadora</h1>
+                
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                
+                <form id="formEditar">
+                    <div class="form-group">
+                        <label for="procesador" class="form-label">Procesador:</label>
+                        <input type="text" id="procesador" name="procesador" required class="form-input" placeholder="Ej: Intel Core i7-12700H">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tarjeta_grafica" class="form-label">Tarjeta Gráfica:</label>
+                        <input type="text" id="tarjeta_grafica" name="tarjeta_grafica" class="form-input" placeholder="Ej: NVIDIA RTX 4060 8GB">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ram" class="form-label">Memoria RAM:</label>
+                        <input type="text" id="ram" name="ram" required class="form-input" placeholder="Ej: 16GB DDR5">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="precio" class="form-label">Precio ($):</label>
+                        <input type="number" id="precio" name="precio" step="0.01" min="0" required class="form-input" placeholder="Ej: 24999.99">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="estado" class="form-label">Estado:</label>
+                        <select id="estado" name="estado" required class="form-input">
+                            <option value="disponible">🟢 Disponible</option>
+                            <option value="apartada">🟡 Apartada</option>
+                            <option value="vendida">🔴 Vendida</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+                        <a href="/tabla-computadoras" class="btn btn-secondary">↩️ Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Cargar navbar
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/navbar.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('navbar-container').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error cargando navbar:', error);
+                    document.getElementById('navbar-container').innerHTML = `
+                        <nav style="background:#333;padding:10px;">
+                            <a href="/" style="color:white;text-decoration:none;">🏪 JavTech</a>
+                        </nav>
+                    `;
+                });
+            
+            // Obtener ID de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            
+            if (!id) {
+                showError('No se proporcionó ID de computadora');
+                return;
+            }
+            
+            // Cargar datos de la computadora
+            cargarComputadora(id);
+        });
+        
+        function cargarComputadora(id) {
+            fetch(`/api/computadoras/${id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Ocultar loading
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    // Verificar si hay error en la respuesta
+                    if (data.error) {
+                        showError(data.error);
+                        return;
+                    }
+                    
+                    // Mostrar formulario
+                    document.getElementById('formContainer').style.display = 'block';
+                    
+                    // Llenar el formulario con los datos
+                    document.getElementById('procesador').value = data.procesador || '';
+                    document.getElementById('tarjeta_grafica').value = data.tarjeta_grafica || '';
+                    document.getElementById('ram').value = data.ram || '';
+                    document.getElementById('precio').value = data.precio || '';
+                    document.getElementById('estado').value = data.estado || 'disponible';
+                })
+                .catch(error => {
+                    console.error('Error al cargar datos:', error);
+                    showError('Error al cargar los datos: ' + error.message);
+                    
+                    // Redirigir después de 3 segundos si hay error
+                    setTimeout(() => {
+                        window.location.href = '/tabla-computadoras';
+                    }, 3000);
+                });
+        }
+        
+        function showError(mensaje) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('errorMessage').textContent = mensaje;
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('formContainer').style.display = 'block';
+        }
+        
+        // Manejar envío del formulario
+        document.getElementById('formEditar').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            
+            if (!id) {
+                alert('Error: ID no válido');
+                return;
+            }
+            
+            // Validar datos
+            const procesador = document.getElementById('procesador').value.trim();
+            const tarjeta_grafica = document.getElementById('tarjeta_grafica').value.trim();
+            const ram = document.getElementById('ram').value.trim();
+            const precio = document.getElementById('precio').value;
+            const estado = document.getElementById('estado').value;
+            
+            if (!procesador || !ram || !precio) {
+                alert('Por favor complete todos los campos requeridos');
+                return;
+            }
+            
+            const formData = {
+                procesador: procesador,
+                tarjeta_grafica: tarjeta_grafica,
+                ram: ram,
+                precio: parseFloat(precio),
+                estado: estado
+            };
+            
+            // Deshabilitar botón durante la solicitud
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Guardando...';
+            submitBtn.disabled = true;
+            
+            fetch(`/api/computadoras/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Restaurar botón
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                if (data.success) {
+                    alert('✅ ' + data.message);
+                    window.location.href = '/tabla-computadoras';
+                } else {
+                    alert('❌ ' + (data.error || 'Error al actualizar'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Restaurar botón
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                alert('❌ Error al actualizar computadora: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
